@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace TestShooter.Shooting
 {
-    public interface IGunable
+    public interface IWeaponable
     {
-        void InitGun(Transform holster);
+        void InitWeapon(Transform holster);
         void Fire();
     }
 }

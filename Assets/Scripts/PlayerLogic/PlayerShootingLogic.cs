@@ -6,32 +6,28 @@ using UnityEngine;
 
 namespace TestShooter.Player
 {
-    public class PlayerShootingLogic : ICanShootable
+    public class PlayerShootingLogic : ICanAttackable
     {
         private Transform _weaponHand;
 
         private IInputable _inputProvider;
-        private IGunable _currentGun;
-        public IGunable CurrentGun => _currentGun;
+        private IWeaponable _currentWeapon;
 
-        public PlayerShootingLogic(Transform weaponHand, IGunable gun, IInputable inputProvider)
+        public IWeaponable CurrentGun => _currentWeapon;
+
+        public PlayerShootingLogic(Transform weaponHand, IWeaponable gun, IInputable inputProvider)
         {
             _weaponHand = weaponHand;
-            _currentGun = gun;
+            _currentWeapon = gun;
+            _currentWeapon.InitWeapon(_weaponHand);
+
             _inputProvider = inputProvider;
-
-            InitWeapon();
             _inputProvider.OnShootDone += UseCurrentWeapon;
-        }
-
-        private void InitWeapon()
-        {
-            _currentGun.InitGun(_weaponHand);
         }
 
         public void UseCurrentWeapon()
         {
-            _currentGun.Fire();
+            _currentWeapon.Fire();
         }
     }
 }

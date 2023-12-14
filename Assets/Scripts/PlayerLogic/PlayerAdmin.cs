@@ -14,7 +14,7 @@ namespace TestShooter.Player
         private IInputable _inputProvider;
         private IMovable _movementLogic;
         private IDamageable _damageableLogic;
-        private ICanShootable _shootLogic;
+        private ICanAttackable _shootLogic;
 
         [SerializeField] private Transform _weaponHand;
         [SerializeField] private DefaultGun _gun;
@@ -27,7 +27,8 @@ namespace TestShooter.Player
         private void Start()
         {
             _movementLogic = new PlayerMovement(this.transform, this._inputProvider);
-            _damageableLogic = new PlayerDamageableLogic(100);//TODO
+            _damageableLogic = this.gameObject.AddComponent(typeof(PlayerDamageRecevierLogic)) as PlayerDamageRecevierLogic;
+
             _shootLogic = new PlayerShootingLogic(_weaponHand, Instantiate(_gun), this._inputProvider);
         }
     }

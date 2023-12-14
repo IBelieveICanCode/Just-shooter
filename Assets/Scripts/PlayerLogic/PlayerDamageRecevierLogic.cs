@@ -5,28 +5,29 @@ using UnityEngine;
 
 namespace TestShooter.Player
 {
-    public class PlayerDamageableLogic : IDamageable
+    [RequireComponent(typeof(Collider))]
+    public class PlayerDamageRecevierLogic : MonoBehaviour, IDamageable
     {
-        private float _health;
+        [SerializeField] private float _health = 100;
         private float _maxHealth;
         public float Health => _health;
 
-        public PlayerDamageableLogic(float maxHealth)
+        public void Init(float maxHealth)
         {
             _maxHealth = maxHealth;
         }
 
-
         public void Die()
         {
-
         }
 
         public void ReceiveDamage(float damage)
         {
-
-        }
-
-        
+            _health -= damage;
+            if (_health <= 0)
+            {
+                Die(); 
+            }
+        }       
     }
 }
