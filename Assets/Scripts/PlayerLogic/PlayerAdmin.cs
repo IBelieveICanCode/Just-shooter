@@ -5,31 +5,31 @@ using System.Collections.Generic;
 using TestShooter.InputSystem;
 using TestShooter.Shooting;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace TestShooter.Player
 {
-    [RequireComponent(typeof(IInputable))]
-    public class PlayerAdmin : MonoBehaviour
+    [RequireComponent(typeof(IInputable), typeof(NavMeshAgent))]
+    public class PlayerAdmin : MonoBehaviour, IPlayerDetectable
     {
         private IInputable _inputProvider;
-        private IMovable _movementLogic;
-        private IDamageable _damageableLogic;
-        private ICanAttackable _shootLogic;
+        private NavMeshAgent _agent;
 
         [SerializeField] private Transform _weaponHand;
         [SerializeField] private DefaultGun _gun;
- 
+
+        public Transform Transform => this.transform;
+
         private void Awake()
         {
             _inputProvider = GetComponent<PlayerInputProvider>();
+            _agent = GetComponent<NavMeshAgent>();
         }
 
         private void Start()
         {
-            _movementLogic = new PlayerMovement(this.transform, this._inputProvider);
-            _damageableLogic = this.gameObject.AddComponent(typeof(PlayerDamageRecevierLogic)) as PlayerDamageRecevierLogic;
-
-            _shootLogic = new PlayerShootingLogic(_weaponHand, Instantiate(_gun), this._inputProvider);
+            var movementLogic = new PlayerMovement(this.transform, this._agent, this._inputProvider);
+            var shootLogic = new PlayerShootingLogic(_weaponHand, Instantiate(_gun), this._inputProvider);
         }
     }
 }

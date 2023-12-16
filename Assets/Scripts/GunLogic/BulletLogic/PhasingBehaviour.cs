@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TestShooter.Shooting.Bullets
 {
-    public class PhasingBullet : IBulletBehavior
+    public class PhasingBehaviour : IBulletBehavior
     {
         public BulletTypes Type => BulletTypes.Phasing;
 

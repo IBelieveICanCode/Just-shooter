@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TestShooter.Player
 {
     [RequireComponent(typeof(Collider))]
-    public class PlayerDamageRecevierLogic : MonoBehaviour, IDamageable
+    public class StandartDamageRecevierLogic : MonoBehaviour, IDamageable
     {
         [SerializeField] private float _health = 100;
         private float _maxHealth;

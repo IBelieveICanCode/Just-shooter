@@ -12,8 +12,8 @@ namespace TestShooter.Player
     {
         private PlayerActions _inputActions;
 
-        public event Action<Vector2> OnMovementDone;
-        public event Action<Vector2> OnRotationDone;
+        public event Action<Vector3> OnMovementDone;
+        public event Action<Vector3> OnRotationDone;
         public event Action OnShootDone;
 
         private void Start()
@@ -38,12 +38,13 @@ namespace TestShooter.Player
             OnShootDone?.Invoke();
         }
 
-        private Vector2 GetMovementAxis()
+        private Vector3 GetMovementAxis()
         {
-            return _inputActions.PlayerDefaultInput.Movement.ReadValue<Vector2>();
+            Vector2 movementAxis = _inputActions.PlayerDefaultInput.Movement.ReadValue<Vector2>();
+            return movementAxis;
         }
 
-        private Vector2 GetRotationAxis()
+        private Vector3 GetRotationAxis()
         {
             return _inputActions.PlayerDefaultInput.Rotation.ReadValue<Vector2>();
         }

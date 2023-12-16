@@ -6,14 +6,12 @@ using UnityEngine;
 
 namespace TestShooter.Player
 {
-    public class PlayerShootingLogic : ICanAttackable
+    public class PlayerShootingLogic : ICanUseWeaponable
     {
         private Transform _weaponHand;
 
         private IInputable _inputProvider;
         private IWeaponable _currentWeapon;
-
-        public IWeaponable CurrentGun => _currentWeapon;
 
         public PlayerShootingLogic(Transform weaponHand, IWeaponable gun, IInputable inputProvider)
         {

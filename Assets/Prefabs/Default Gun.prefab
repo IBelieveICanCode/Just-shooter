@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e386a7bc1f921294388c4c9fa5480613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletProbabilitiesConfig: {fileID: 11400000, guid: 38288f8323eb3bb4eb2dcf0e92a92b38, type: 2}
   _damage: 10
   _bulletSpeed: 10
   _bulletPrefab: {fileID: -6190285930415811528, guid: 21d79e405ef81fd45afce1c1ab242d38, type: 3}
@@ -272,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e386a7bc1f921294388c4c9fa5480613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletProbabilitiesConfig: {fileID: 0}
   _damage: 10
   _bulletSpeed: 10
   _bulletPrefab: {fileID: 0}

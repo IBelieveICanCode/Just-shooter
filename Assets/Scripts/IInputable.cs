@@ -7,8 +7,8 @@ namespace TestShooter.InputSystem
 {
     public interface IInputable 
     {
-        public event Action<Vector2> OnMovementDone;
-        public event Action<Vector2> OnRotationDone;
+        public event Action<Vector3> OnMovementDone;
+        public event Action<Vector3> OnRotationDone;
         public event Action OnShootDone;
     }
 }

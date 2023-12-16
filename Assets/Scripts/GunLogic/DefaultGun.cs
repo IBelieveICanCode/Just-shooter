@@ -9,16 +9,20 @@ namespace TestShooter.Shooting
 {
     public class DefaultGun : MonoBehaviour, IWeaponable
     {
+        [SerializeField] private BulletProbabilitiesConfig _bulletProbabilitiesGiver;
         [SerializeField] private float _damage = 2;
         [SerializeField] private float _bulletSpeed = 2;
         [SerializeField] private Bullet _bulletPrefab;
 
         private int _pooledBullets = 10;
-        private Pool<Bullet> _projPool;
+        private Pool<Bullet> _bulletPool;
+        private BulletBehaviourFactory _bulletBehaviourFactory;
 
         private void Start()
         {
-            _projPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets);        
+            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets);
+            _bulletProbabilitiesGiver.RestoreAllProbabilities();
+            _bulletBehaviourFactory = new BulletBehaviourFactory(_bulletProbabilitiesGiver);
         }
 
         public void InitWeapon(Transform holster)
@@ -29,19 +33,19 @@ namespace TestShooter.Shooting
 
         public void Fire()
         {
-            Bullet bullet = _projPool.Allocate();
+            Bullet bullet = _bulletPool.Allocate();
             EventHandler handler = null;
 
             handler = (sender, e) =>
             {
-                _projPool.Release(bullet);
+                _bulletPool.Release(bullet);
                 bullet.OnDeath -= handler;
             }; 
 
             bullet.OnDeath += handler;
             bullet.gameObject.SetActive(true);
             bullet.Init(_damage, _bulletSpeed, transform.forward);
-            bullet.SetBehaviour(new PhasingBullet());
+            bullet.SetBehaviour(_bulletBehaviourFactory.Create());
             bullet.gameObject.transform.position = transform.position;
 
             bullet.Launch();

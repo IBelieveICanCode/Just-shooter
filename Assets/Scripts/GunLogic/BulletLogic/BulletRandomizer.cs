@@ -9,16 +9,16 @@ namespace TestShooter.Shooting.Bullets
         private readonly List<BulletsChance> BulletsChances;
         private readonly Random Random;
 
-        // Constructor with seed
-        public BulletRandomizer(List<BulletsChance> bulletsChances, int seed)
+        public BulletRandomizer(List<BulletsChance> bulletsChances)
         {
             BulletsChances = bulletsChances;
-            Random = new Random(seed);
+            Random = new Random();
         }
 
         public BulletTypes GetRandomBulletType()
         {
             float totalProbability = 0;
+
             foreach (var bulletChance in BulletsChances)
             {
                 totalProbability += bulletChance.Probability;
@@ -28,7 +28,10 @@ namespace TestShooter.Shooting.Bullets
             foreach (var bulletChance in BulletsChances)
             {
                 if (randomPoint < bulletChance.Probability)
+                {
+                    UnityEngine.Debug.Log($"Randomizer returned type of bullet: {bulletChance.Type} based on probability {bulletChance.Probability}");
                     return bulletChance.Type;
+                }
 
                 randomPoint -= bulletChance.Probability;
             }

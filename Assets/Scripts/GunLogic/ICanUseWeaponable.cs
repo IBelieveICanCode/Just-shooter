@@ -1,8 +1,7 @@
 namespace TestShooter.Shooting
 {
-    public interface ICanAttackable 
+    public interface ICanUseWeaponable 
     {
-        public IWeaponable CurrentGun { get; }
         public void UseCurrentWeapon();
     }
 }

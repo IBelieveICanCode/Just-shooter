@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace TestShooter.Shooting.Bullets
 {
-    [SerializeField]
+    [System.Serializable]
     public class BulletsChance
     {
+        [SerializeField] private BulletTypes _type;
         [Range(0, 100)]
         [SerializeField] private float _defaultProbability;
-        [Range(0, 100)]
-        [SerializeField] private float _currentProbability;
+        private float _currentProbability; //TODO custom editor to assign this to default automatically
         public float Probability => _currentProbability;
-        [field: SerializeField] public BulletTypes Type { get; }
+        public BulletTypes Type => _type;
 
         public void RemoveAllChances()
         {
@@ -24,7 +24,7 @@ namespace TestShooter.Shooting.Bullets
             _currentProbability = 100;
         }
 
-        public void RevertToDefault()
+        public void SetToDefault()
         {
             _currentProbability = _defaultProbability;
         }
