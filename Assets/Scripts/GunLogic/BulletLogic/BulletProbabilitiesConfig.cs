@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TestShooter.Shooting.Bullets
 {
     [CreateAssetMenu(fileName = "Bullet Probabilities", menuName = "Configs/Probabilities Config")]
-    public class BulletProbabilitiesConfig : ScriptableObject
+    public class BulletProbabilitiesConfig : ScriptableObject, IBulletSettingable
     {
         [SerializeField] private List<BulletsChance> _bulletChances;
 
@@ -24,7 +24,7 @@ namespace TestShooter.Shooting.Bullets
             _bulletChances.Where(chance => chance.Type != Type).ToList().ForEach(chance => chance.RemoveAllChances());
         }
 
-        public void RestoreAllProbabilities()
+        public void Restore()
         {
             _bulletChances.ForEach(chance => chance.SetToDefault());
         }

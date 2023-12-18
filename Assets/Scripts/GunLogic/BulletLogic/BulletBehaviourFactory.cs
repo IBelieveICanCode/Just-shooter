@@ -7,9 +7,9 @@ namespace TestShooter.Shooting.Bullets
 {
     public class BulletBehaviourFactory : IFactory<IBulletBehavior>
     {
-        private BulletProbabilitiesConfig _bulletProbabilitiesConfig;
+        private IBulletSettingable _bulletProbabilitiesConfig;
 
-        public BulletBehaviourFactory(BulletProbabilitiesConfig bulletProbabilitiesConfig)
+        public BulletBehaviourFactory(IBulletSettingable bulletProbabilitiesConfig)
         {
             _bulletProbabilitiesConfig = bulletProbabilitiesConfig;
         }

@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace TestShooter
 {
-    public interface IMovable
+    public interface IRotatable
     {
-        void Move(Vector3 direction);
-
+        void Rotate(Vector3 direction);
     }
 }

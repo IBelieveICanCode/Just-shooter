@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace TestShooter.Player
 {
-    public class PlayerMovement : IMovable
+    public class PlayerMovement : IMovable, IRotatable
     {
         private Transform _ownerTransform;
         private IInputable _inputProvider;

@@ -78,7 +78,5 @@ namespace TestShooter.Shooting.Bullets
                 _movementSubscription.Dispose();
             }
         }
-
-
     }
 }
