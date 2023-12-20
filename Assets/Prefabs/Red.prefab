@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3765359534383600667}
   - component: {fileID: 4642828905877847336}
   - component: {fileID: 4236618676079756595}
-  - component: {fileID: 8177610161365220583}
+  - component: {fileID: 4188799903205023675}
   - component: {fileID: 763321883282632137}
   m_Layer: 0
   m_Name: Red
@@ -111,7 +111,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8177610161365220583
+--- !u!114 &4188799903205023675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,12 +120,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1115020653637335867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5738d63d75c958d48ae4341a708dc9a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 86ea33b27139d934584f7b56e9ca5d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stoppingDistance: 1
   _weaponHolster: {fileID: 4686269375642494454}
-  _playerTransform: {fileID: 0}
   _gun: {fileID: 671032580332428520, guid: 95201e54d1124b1418daa853f7a72dbc, type: 3}
+  PlayerTransform: {fileID: 0}
+  _touchDamage: 15
+  _maxHeightOfFlying: 1
+  _timeOfFlyingUp: 2
+  _durationBeforeAttack: 0.5
+  _lengthOfDiveAttack: 1
+  _diveDuration: 1
 --- !u!195 &763321883282632137
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -191,7 +198,7 @@ GameObject:
   - component: {fileID: 6810058118360290364}
   - component: {fileID: 4218863644558033863}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

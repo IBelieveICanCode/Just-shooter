@@ -6,23 +6,23 @@ using UnityEngine;
 
 namespace TestShooter.Enemy
 {
-    public class AscendInAirState : State<EnemyAdmin>
+    public class AscendInAirState : State<FlyingEnemy>
     {
-        public override void EnterState(EnemyAdmin owner)
+        public override void EnterState(FlyingEnemy owner)
         {
             owner.Agent.updatePosition = false;
             Debug.Log($"Current state is {GetType().Name}");
             owner.Transform
-                .DOMoveY(owner.MaxHeight, owner.TimeOfFlyingUp)
+                .DOMoveY(owner.MaxHeightOfFlying, owner.TimeOfFlyingUp)
                 .OnComplete(() => owner.StateMachine.ChangeState(new FlyingToThePlayerState()));
 
         }
 
-        public override void ExitState(EnemyAdmin owner)
+        public override void ExitState(FlyingEnemy owner)
         {
         }
 
-        public override void UpdateState(EnemyAdmin owner)
+        public override void UpdateState(FlyingEnemy owner)
         {
         }
     }

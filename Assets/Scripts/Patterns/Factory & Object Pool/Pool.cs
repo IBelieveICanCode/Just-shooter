@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ObjectPool
 {
-	public class Pool<T> : IEnumerable where T : IResettable
+	public class Pool<T> : IEnumerable where T : IPoolable
 	{
+		private Transform _poolParent;
+
 		private List<T> _members = new List<T>();
 		private HashSet<T> _unavailable = new HashSet<T>();
 		private IFactory<T> _factory;
 
 		private const int DefaultPoolSize = 5;
 
-		public Pool(IFactory<T> factory) : this(factory, DefaultPoolSize) { }
-
-		public Pool(IFactory<T> factory, int poolSize)
+		public Pool(IFactory<T> factory, int poolSize, Transform parent)
 		{
-			this._factory = factory;
+			_factory = factory;
+			_poolParent = parent;
 
 			for (int i = 0; i < poolSize; i++)
 			{
@@ -34,22 +36,25 @@ namespace ObjectPool
 					return _members[i];
 				}
 			}
+
 			T newMember = Create();
 			_unavailable.Add(newMember);
 			return newMember;
+		}
+
+		T Create()
+		{
+			T member = _factory.Create();
+			member.Reset();
+			_members.Add(member);
+			member.PlaceUnderParent(_poolParent);
+			return member;
 		}
 
 		public void Release(T member)
 		{
 			member.Reset();
 			_unavailable.Remove(member);
-		}
-
-		T Create()
-		{
-			T member = _factory.Create();
-			_members.Add(member);
-			return member;
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

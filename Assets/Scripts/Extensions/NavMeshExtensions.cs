@@ -5,9 +5,10 @@ using UnityEngine.AI;
 
 public static class NavMeshExtensions
 {
-    public static bool IsFarAwayFrom(this NavMeshAgent agent, Vector3 destination, float threshold)
+    private static float Threshold = 0.2f;
+    public static bool IsFarAwayFrom(this NavMeshAgent agent, Vector3 destination)
     {
-        if (Vector3.Distance(agent.transform.position, destination) > agent.stoppingDistance - threshold)
+        if (Vector3.Distance(agent.transform.position, destination) > agent.stoppingDistance - Threshold)
         {
             return true;
         }
@@ -15,9 +16,9 @@ public static class NavMeshExtensions
         return false;
     }
 
-    public static bool IsTooCloseTo(this NavMeshAgent agent, Vector3 destination, float threshold)
+    public static bool IsTooCloseTo(this NavMeshAgent agent, Vector3 destination)
     {
-        if (Vector3.Distance(agent.transform.position, destination) <= agent.stoppingDistance + threshold)
+        if (Vector3.Distance(agent.transform.position, destination) <= agent.stoppingDistance + Threshold)
         {
             return true;
         }

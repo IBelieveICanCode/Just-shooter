@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace TestShooter.Enemy
 {
-    public class DiveToThePlayerAttackState : State<EnemyAdmin>
+    public class DiveToThePlayerAttackState : State<FlyingEnemy>
     {
         EnemyDiveAttack _enemyDiveAttack;
 
-        public override void EnterState(EnemyAdmin owner)
+        public override void EnterState(FlyingEnemy owner)
         {
             owner.Agent.updatePosition = false;
             Debug.Log($"Current state is {GetType().Name}");
@@ -25,11 +25,11 @@ namespace TestShooter.Enemy
             _enemyDiveAttack.DiveAttack();
         }
 
-        public override void ExitState(EnemyAdmin owner)
+        public override void ExitState(FlyingEnemy owner)
         {
         }
 
-        public override void UpdateState(EnemyAdmin owner)
+        public override void UpdateState(FlyingEnemy owner)
         {
             if (_enemyDiveAttack != null)
             {

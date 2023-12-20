@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace TestShooter.Shooting.Bullets
 {
-    public class Bullet : MonoBehaviour, IResettable
+    public class Bullet : MonoBehaviour, IPoolable, ITouchable
     {
         public event EventHandler OnDeath;
         private float _damage;
         private float _speed;
         private Vector3 _direction;
 
-        private IBulletBehavior _behavior;
+        private IBulletBehavior _behaviour;
         private IDisposable _movementSubscription;
 
         public void Init(float damage, float speed, Vector3 direction)
@@ -33,19 +33,19 @@ namespace TestShooter.Shooting.Bullets
                 transform.position += _direction.normalized * _speed * Time.deltaTime;
             });
 
-            if (_behavior == null)
+            if (_behaviour == null)
             {
-                _behavior = new DefaultBullet();
+                _behaviour = new DefaultBullet();
             }
         }
 
         public void SetBehaviour(IBulletBehavior behaviour)
         {
-            _behavior = behaviour;
+            _behaviour = behaviour;
         }
 
 
-        private void OnTriggerEnter(Collider collision)
+        public void OnTriggerEnter(Collider collision)
         {
             IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
 
@@ -56,7 +56,7 @@ namespace TestShooter.Shooting.Bullets
             }
 
             damageable.ReceiveDamage(_damage);
-            _behavior?.ExecuteBehavior(this, collision);
+            _behaviour?.ExecuteBehavior(this, collision);
         }
 
         public void Die()
@@ -71,12 +71,22 @@ namespace TestShooter.Shooting.Bullets
             gameObject.SetActive(false);
         }
 
+        public void Restore()
+        {
+            gameObject.SetActive(true);
+        }
+
         private void EndMovement()
         {
             if (_movementSubscription != null)
             {
                 _movementSubscription.Dispose();
             }
+        }
+
+        public void PlaceUnderParent(Transform transform)
+        {
+            this.transform.parent = transform;
         }
     }
 }

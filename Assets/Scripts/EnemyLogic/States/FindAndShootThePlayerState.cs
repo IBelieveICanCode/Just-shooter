@@ -7,13 +7,13 @@ using UnityEngine.AI;
 
 namespace TestShooter.Enemy
 {
-    public class FindAndShootThePlayerState : State<EnemyAdmin>
+    public class FindAndShootThePlayerState : State<ShootingEnemy>
     {
         private IMovable _moveLogic;
         private IRotatable _rotateLogic;
         private IWeaponable _currentWeapon;
 
-        public override void EnterState(EnemyAdmin owner)
+        public override void EnterState(ShootingEnemy owner)
         {
             owner.Agent.isStopped = false;
             _moveLogic = new EnemyGroundMovement(owner.Agent);
@@ -21,12 +21,12 @@ namespace TestShooter.Enemy
             _currentWeapon = owner.Gun;
         }
 
-        public override void ExitState(EnemyAdmin owner)
+        public override void ExitState(ShootingEnemy owner)
         {
             owner.Agent.isStopped = true;
         }
 
-        public override void UpdateState(EnemyAdmin owner)
+        public override void UpdateState(ShootingEnemy owner)
         {
             if (owner.PlayerTransform == null)
             {
@@ -37,7 +37,7 @@ namespace TestShooter.Enemy
             _rotateLogic.Rotate(owner.PlayerTransform.position);
             _currentWeapon.Fire();
 
-            if (owner.Agent.IsTooCloseTo(owner.PlayerTransform.position, owner.ThresholdForNavMeshStopping))
+            if (owner.Agent.IsTooCloseTo(owner.PlayerTransform.position))
             {
                 owner.StateMachine.ChangeState(new StandAndShootThePlayerState());
             }

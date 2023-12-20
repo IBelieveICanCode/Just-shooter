@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1008565485572267994}
   - component: {fileID: 6387970745263246542}
   - component: {fileID: 3975694157136520757}
-  - component: {fileID: 9110956931791674034}
+  - component: {fileID: 6153404008583720771}
   - component: {fileID: 7542068903422200539}
   m_Layer: 0
   m_Name: Blue
@@ -142,7 +142,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9110956931791674034
+--- !u!114 &6153404008583720771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,10 +151,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 775218294875888951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5738d63d75c958d48ae4341a708dc9a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e3147a9f1632414f86ba997e1e9aa62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceToPlayer: 0.5
+  _stoppingDistance: 0.5
   _weaponHolster: {fileID: 5138133182484253390}
   _playerTransform: {fileID: 0}
   _gun: {fileID: 671032580332428520, guid: 95201e54d1124b1418daa853f7a72dbc, type: 3}

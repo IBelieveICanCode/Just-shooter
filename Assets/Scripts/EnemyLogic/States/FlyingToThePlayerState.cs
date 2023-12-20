@@ -5,24 +5,24 @@ using UnityEngine;
 
 namespace TestShooter.Enemy
 {
-    public class FlyingToThePlayerState : State<EnemyAdmin>
+    public class FlyingToThePlayerState : State<FlyingEnemy>
     {
         IMovable _moveLogic;
         IRotatable _rotateLogic;
 
-        public override void EnterState(EnemyAdmin owner)
+        public override void EnterState(FlyingEnemy owner)
         {
             owner.Agent.updatePosition = false;
-            _moveLogic = new EnemyFlyingMovement(owner.Agent, owner.MaxHeight);
+            _moveLogic = new EnemyFlyingMovement(owner.Agent, owner.MaxHeightOfFlying);
             Debug.Log($"Current state is {GetType().Name}");
             _rotateLogic = new EnemyBasicRotation(owner.Agent.transform);
         }
 
-        public override void ExitState(EnemyAdmin owner)
+        public override void ExitState(FlyingEnemy owner)
         {
         }
 
-        public override void UpdateState(EnemyAdmin owner)
+        public override void UpdateState(FlyingEnemy owner)
         {
             if (owner.PlayerTransform == null)
             {
@@ -32,10 +32,10 @@ namespace TestShooter.Enemy
             _moveLogic.Move(owner.PlayerTransform.position);
             _rotateLogic.Rotate(owner.PlayerTransform.position);
 
-            if (owner.Agent.IsTooCloseTo(owner.PlayerTransform.position, owner.ThresholdForNavMeshStopping))
+            if (owner.Agent.IsTooCloseTo(owner.PlayerTransform.position))
             {
                 var nextState = new DiveToThePlayerAttackState();
-                owner.StateMachine.ChangeState(new StopState(nextState,owner.DurationBeforeAttack));
+                owner.StateMachine.ChangeState(new StopState<FlyingEnemy>(owner.StateMachine, nextState, owner.DurationBeforeAttack));
             }
         }
     }

@@ -6,32 +6,34 @@ using UnityEngine;
 
 namespace TestShooter.Enemy
 {
-    public class StopState : State<EnemyAdmin>
+    public class StopState<T> : State<T> where T: MonoBehaviour
     {
-        private State<EnemyAdmin> _nextState;
+        private StateMachine<T> _stateMachine;
+        private State<T> _nextState;
         private float _stopDuration;
 
         private Timer _timer;
 
-        public StopState(State<EnemyAdmin> nextState, float stopDuration)
+        public StopState(StateMachine<T> stateMachine, State<T> nextState, float stopDuration)
         {
+            _stateMachine = stateMachine;
             _nextState = nextState;
             _stopDuration = stopDuration;
         }
 
-        public override void EnterState(EnemyAdmin owner)
+        public override void EnterState(T owner)
         {
             Debug.Log($"Current state is {GetType().Name}");
 
             _timer = new Timer();
-            _timer.StartTimer(_stopDuration, () => owner.StateMachine.ChangeState(_nextState));
+            _timer.StartTimer(_stopDuration, () => _stateMachine.ChangeState(_nextState));
         }
 
-        public override void ExitState(EnemyAdmin owner)
+        public override void ExitState(T owner)
         {
         }
 
-        public override void UpdateState(EnemyAdmin owner)
+        public override void UpdateState(T owner)
         {
         }
     }

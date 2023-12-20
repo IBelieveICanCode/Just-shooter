@@ -22,7 +22,7 @@ namespace TestShooter.Shooting
 
         private void Start()
         {
-            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets);
+            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets, this.transform);
             _timerForReloading = new Timer();
         }
 
@@ -53,7 +53,7 @@ namespace TestShooter.Shooting
             }; 
 
             bullet.OnDeath += handler;
-            bullet.gameObject.SetActive(true);
+            bullet.Restore();
             bullet.Init(_damage, _bulletSpeed, transform.forward);
             bullet.SetBehaviour(_bulletBehaviourFactory.Create());
             bullet.gameObject.transform.position = transform.position;

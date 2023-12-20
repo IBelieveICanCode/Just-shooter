@@ -32,7 +32,7 @@ namespace TestShooter.Shooting.Bullets
 
             _amountOfRicochets--;
             Vector3 direction = enemyToRicochet.transform.position - bullet.transform.position;
-            bullet.Init(2, 2, direction);
+            bullet.Init(2, 2, direction); //TODO
         }
 
         private GameObject FindNearestEnemy(Transform thisBullet, float radius)
