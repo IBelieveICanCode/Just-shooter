@@ -123,10 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ea33b27139d934584f7b56e9ca5d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthConfig: {fileID: 11400000, guid: 2d2d83c670443624fbe7e9e51dbbda10, type: 2}
   _stoppingDistance: 1
   _weaponHolster: {fileID: 4686269375642494454}
   _gun: {fileID: 671032580332428520, guid: 95201e54d1124b1418daa853f7a72dbc, type: 3}
-  PlayerTransform: {fileID: 0}
   _touchDamage: 15
   _maxHeightOfFlying: 1
   _timeOfFlyingUp: 2

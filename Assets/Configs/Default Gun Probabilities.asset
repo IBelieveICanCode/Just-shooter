@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletChances:
   - _type: 1
-    _defaultProbability: 20
+    _defaultProbability: 0
   - _type: 2
-    _defaultProbability: 10
+    _defaultProbability: 100
   - _type: 0
-    _defaultProbability: 70
+    _defaultProbability: 0

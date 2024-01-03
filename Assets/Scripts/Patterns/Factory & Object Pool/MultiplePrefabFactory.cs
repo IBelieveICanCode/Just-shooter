@@ -21,7 +21,7 @@ namespace ObjectPool
         {
             if (!_prefabs.TryGetValue(type, out GameObject prefab))
             {
-                throw new InvalidOperationException("Prefab not registered for type " + type);
+                Debug.Log($"Prefab not registered for type {type}. Will be instantiated a new one");
             }
 
             GameObject tempGameObject = GameObject.Instantiate(prefab) as GameObject;

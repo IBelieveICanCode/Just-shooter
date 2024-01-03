@@ -41,8 +41,8 @@ namespace ObjectPool
                 }
             }
 
-            T newMember = Create(typeof(T));
-            _unavailable.Add(newMember);
+            T newMember = Create(type);
+            _unavailable.Add(newMember); // Enable the new object, if applicable
             return newMember;
         }
 

@@ -11,10 +11,14 @@ namespace Events
 
         public static bool IsInitialized = false;
 
-        public static void Init()
+        public static void InitEssentials()
         {
-            Debug.Log("EventManager is initiated");
-            EventsContainer.Add(typeof(AnnouncePlayerPosition), new AnnouncePlayerPosition());
+            Debug.Log("EventManager is initiated"); //TODO Make a mediator for consolidation of events
+            EventsContainer.Add(typeof(AnnouncePlayerPositionEvent), new AnnouncePlayerPositionEvent());
+            EventsContainer.Add(typeof(EnemyDeadEvent), new EnemyDeadEvent());
+            EventsContainer.Add(typeof(GameIsPausedEvent), new GameIsPausedEvent());
+            EventsContainer.Add(typeof(PassResourceToPlayerEvent), new PassResourceToPlayerEvent());
+            EventsContainer.Add(typeof(KillAllEnemiesEvent), new KillAllEnemiesEvent());
             IsInitialized = true;
         }
 

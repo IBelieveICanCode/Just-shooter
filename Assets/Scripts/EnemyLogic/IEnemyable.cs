@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemyable 
+namespace TestShooter.Enemy
 {
-    Transform Transform { get; }
+    public interface IEnemyable
+    {
+        IDamageable EnemyDamageableLogic { get; }
+        Transform Transform { get; }
+    }
 }

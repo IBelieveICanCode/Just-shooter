@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace TestShooter.Player
 {
-    public class PlayerShootingLogic : ICanUseWeaponable
+    public class PlayerShooter : ICanUseWeaponable
     {
         private Transform _weaponHand;
 
         private IInputable _inputProvider;
         private IWeaponable _currentWeapon;
 
-        public PlayerShootingLogic(Transform weaponHand, IWeaponable gun, IInputable inputProvider, IBulletSettingable bulletSetting)
+        public PlayerShooter(Transform weaponHand, IWeaponable gun, IInputable inputProvider, IBulletSettingable bulletSetting)
         {
             _weaponHand = weaponHand;
             _currentWeapon = gun;

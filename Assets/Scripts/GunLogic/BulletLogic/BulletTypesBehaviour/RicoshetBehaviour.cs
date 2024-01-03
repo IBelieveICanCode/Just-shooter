@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TestShooter.Enemy;
 using UnityEngine;
 
 namespace TestShooter.Shooting.Bullets
@@ -8,20 +9,28 @@ namespace TestShooter.Shooting.Bullets
     {
         private List<IEnemyable> _alreadyHitEnemies = new List<IEnemyable>();
         private float _radius = 20;
-        private int _amountOfRicochets = 1;
+        private int _amountOfRicochets;
+        private int _maxAmountOfRicochets = 1;
 
         public BulletTypes Type => BulletTypes.Ricochet;
 
-        public void ExecuteBehavior(Bullet bullet, Collider firstEnemy)
+        public RicoshetBehaviour()
         {
+            _amountOfRicochets = _maxAmountOfRicochets;
+        }
+
+        public void ExecuteBehavior(Bullet bullet, Collider collider)
+        {
+            IEnemyable enemy = collider.gameObject.GetComponent<IEnemyable>();
+
             if (_amountOfRicochets <= 0)
             {
-                Debug.Log("No ricoshets behaviour remain");
+                CheckEnemyDieFromBullet(enemy.EnemyDamageableLogic, bullet.Damage);
                 bullet.Die();
                 return;
             }
 
-            _alreadyHitEnemies.Add(firstEnemy.gameObject.GetComponent<IEnemyable>());
+            _alreadyHitEnemies.Add(enemy);
             GameObject enemyToRicochet = FindNearestEnemy(bullet.transform, _radius);
 
             if (enemyToRicochet == null)
@@ -30,9 +39,11 @@ namespace TestShooter.Shooting.Bullets
                 return;
             }
 
+            CheckEnemyDieFromBullet(enemy.EnemyDamageableLogic, bullet.Damage);
+
             _amountOfRicochets--;
             Vector3 direction = enemyToRicochet.transform.position - bullet.transform.position;
-            bullet.Init(2, 2, direction); //TODO
+            bullet.Init(bullet.Damage, bullet.Speed, direction);
         }
 
         private GameObject FindNearestEnemy(Transform thisBullet, float radius)
@@ -66,7 +77,6 @@ namespace TestShooter.Shooting.Bullets
         {
             if (enemy == null)
             {
-                Debug.Log("No valid enemy");
                 return false;
             }
 
@@ -77,6 +87,25 @@ namespace TestShooter.Shooting.Bullets
             }
 
             return true;
+        }
+
+        private void CheckEnemyDieFromBullet(IDamageable enemy, float damage)
+        {
+            if (IfFirstEnemyThatHit())
+            {
+                return;
+            }
+
+            if (enemy.Health <= damage)
+            {
+                IDeathEffectable deathEffect = new RicoshetDeathEffect();
+                deathEffect.TriggerDeathEffect();
+            }
+        }
+
+        private bool IfFirstEnemyThatHit()
+        {
+            return _amountOfRicochets == _maxAmountOfRicochets;
         }
     }
 }

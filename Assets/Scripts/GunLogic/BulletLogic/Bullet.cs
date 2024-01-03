@@ -14,9 +14,13 @@ namespace TestShooter.Shooting.Bullets
         private float _damage;
         private float _speed;
         private Vector3 _direction;
+        private Vector3 _launchDirection;
 
         private IBulletBehavior _behaviour;
         private IDisposable _movementSubscription;
+
+        public float Damage => _damage;
+        public float Speed => _speed;
 
         public void Init(float damage, float speed, Vector3 direction)
         {
@@ -30,7 +34,7 @@ namespace TestShooter.Shooting.Bullets
             _movementSubscription = Observable.EveryUpdate()
             .Subscribe(_ =>
             {
-                transform.position += _direction.normalized * _speed * Time.deltaTime;
+                transform.position += _direction * _speed * Time.deltaTime;
             });
 
             if (_behaviour == null)
@@ -43,7 +47,6 @@ namespace TestShooter.Shooting.Bullets
         {
             _behaviour = behaviour;
         }
-
 
         public void OnTriggerEnter(Collider collision)
         {

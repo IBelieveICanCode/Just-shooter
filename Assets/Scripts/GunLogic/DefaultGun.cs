@@ -22,7 +22,7 @@ namespace TestShooter.Shooting
 
         private void Start()
         {
-            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets, this.transform);
+            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets, null);
             _timerForReloading = new Timer();
         }
 
@@ -44,7 +44,7 @@ namespace TestShooter.Shooting
             _timerForReloading.StartTimer(_cooldown);
 
             Bullet bullet = _bulletPool.Allocate();
-            EventHandler handler = null;
+            EventHandler handler = null; //TODO Remove anonymous method
 
             handler = (sender, e) =>
             {

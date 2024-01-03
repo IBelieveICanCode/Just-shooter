@@ -154,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3147a9f1632414f86ba997e1e9aa62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthConfig: {fileID: 11400000, guid: de1d97c4babb900468c73be8f88da093, type: 2}
   _stoppingDistance: 0.5
   _weaponHolster: {fileID: 5138133182484253390}
-  _playerTransform: {fileID: 0}
   _gun: {fileID: 671032580332428520, guid: 95201e54d1124b1418daa853f7a72dbc, type: 3}
 --- !u!195 &7542068903422200539
 NavMeshAgent:

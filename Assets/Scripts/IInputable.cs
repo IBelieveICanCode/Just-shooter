@@ -10,5 +10,6 @@ namespace TestShooter.InputSystem
         public event Action<Vector3> OnMovementDone;
         public event Action<Vector3> OnRotationDone;
         public event Action OnShootDone;
+        public event Action OnEnergyUseDone;
     }
 }

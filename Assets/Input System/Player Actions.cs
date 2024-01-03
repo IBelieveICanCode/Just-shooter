@@ -53,6 +53,24 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c7ad38d-0985-48b7-9802-0e9ccf0f843f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MagicUse"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab3c08f6-4fcc-4c6e-b381-81dad8c88d7a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -154,6 +172,50 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""105f054c-16b9-4cac-ae6b-202344e30238"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3310046-aaca-4168-b5c8-ec333460dc8f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34b4ef93-12b1-49ea-b163-1ef218852c12"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MagicUse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee2a0844-bf19-4960-baad-5e07f70a060e"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MagicUse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -165,6 +227,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_PlayerDefaultInput_Shoot = m_PlayerDefaultInput.FindAction("Shoot", throwIfNotFound: true);
         m_PlayerDefaultInput_Movement = m_PlayerDefaultInput.FindAction("Movement", throwIfNotFound: true);
         m_PlayerDefaultInput_Rotation = m_PlayerDefaultInput.FindAction("Rotation", throwIfNotFound: true);
+        m_PlayerDefaultInput_Pause = m_PlayerDefaultInput.FindAction("Pause", throwIfNotFound: true);
+        m_PlayerDefaultInput_MagicUse = m_PlayerDefaultInput.FindAction("MagicUse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +293,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerDefaultInput_Shoot;
     private readonly InputAction m_PlayerDefaultInput_Movement;
     private readonly InputAction m_PlayerDefaultInput_Rotation;
+    private readonly InputAction m_PlayerDefaultInput_Pause;
+    private readonly InputAction m_PlayerDefaultInput_MagicUse;
     public struct PlayerDefaultInputActions
     {
         private @PlayerActions m_Wrapper;
@@ -236,6 +302,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_PlayerDefaultInput_Shoot;
         public InputAction @Movement => m_Wrapper.m_PlayerDefaultInput_Movement;
         public InputAction @Rotation => m_Wrapper.m_PlayerDefaultInput_Rotation;
+        public InputAction @Pause => m_Wrapper.m_PlayerDefaultInput_Pause;
+        public InputAction EnergyUse => m_Wrapper.m_PlayerDefaultInput_MagicUse;
         public InputActionMap Get() { return m_Wrapper.m_PlayerDefaultInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -254,6 +322,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Rotation.started += instance.OnRotation;
             @Rotation.performed += instance.OnRotation;
             @Rotation.canceled += instance.OnRotation;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            EnergyUse.started += instance.OnMagicUse;
+            EnergyUse.performed += instance.OnMagicUse;
+            EnergyUse.canceled += instance.OnMagicUse;
         }
 
         private void UnregisterCallbacks(IPlayerDefaultInputActions instance)
@@ -267,6 +341,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Rotation.started -= instance.OnRotation;
             @Rotation.performed -= instance.OnRotation;
             @Rotation.canceled -= instance.OnRotation;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            EnergyUse.started -= instance.OnMagicUse;
+            EnergyUse.performed -= instance.OnMagicUse;
+            EnergyUse.canceled -= instance.OnMagicUse;
         }
 
         public void RemoveCallbacks(IPlayerDefaultInputActions instance)
@@ -289,5 +369,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnMagicUse(InputAction.CallbackContext context);
     }
 }

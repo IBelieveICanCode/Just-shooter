@@ -14,7 +14,6 @@ namespace TestShooter.Enemy
         [SerializeField] private float _lengthOfDiveAttack = 1f;
         [SerializeField] private float _diveDuration = 1f;
 
-
         public float MaxHeightOfFlying => _maxHeightOfFlying;
         public float TimeOfFlyingUp => _timeOfFlyingUp;
         public float DurationBeforeAttack => _durationBeforeAttack;
@@ -26,8 +25,8 @@ namespace TestShooter.Enemy
 
         protected override void InitStateMachine()
         {
-            _stateMachine = new StateMachine<FlyingEnemy>(this);
-            _stateMachine.ChangeState(new AscendInAirState());
+            //_stateMachine = new StateMachine<FlyingEnemy>(this);
+            //_stateMachine.ChangeState(new AscendInAirState());
         }
 
         protected override void UpdateStateMachine()
@@ -41,12 +40,11 @@ namespace TestShooter.Enemy
 
             if (damageable == null)
             {
-                ThisDamageable.Die();
                 return;
             }
 
             damageable.ReceiveDamage(_touchDamage);
-            ThisDamageable.Die();
+            EnemyDamageableLogic.Die();
         }
     }
 }

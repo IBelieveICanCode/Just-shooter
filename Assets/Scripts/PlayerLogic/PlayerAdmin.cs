@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TestShooter.InputSystem;
 using TestShooter.Shooting;
 using TestShooter.Shooting.Bullets;
+using TestShooter.Spells;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,12 +14,16 @@ namespace TestShooter.Player
     [RequireComponent(typeof(IInputable), typeof(NavMeshAgent))]
     public class PlayerAdmin : MonoBehaviour, IPlayerDetectable
     {
+        private IDamageable _damageableLogic;
+        private IMovable _movementLogic;
+        private ICanUseWeaponable _shootLogic;
+        private ISpellCasterable _spellCastLogic;
+        private IResourceObtainable _resourceObtainLogic;
+
         private IInputable _inputProvider;
         private NavMeshAgent _agent;
 
-        [SerializeField] private BulletProbabilitiesConfig _bulletProbabilitiesConfig;
         [SerializeField] private Transform _weaponHand;
-        [SerializeField] private DefaultGun _gun;
 
         public Transform Transform => this.transform;
 
@@ -28,12 +33,27 @@ namespace TestShooter.Player
             _agent = GetComponent<NavMeshAgent>();
         }
 
-        private void Start()
+        public void Init(IHealthOperatorable healthOperator, IEnergyOperatorable energyUseOperator)
         {
-            var movementLogic = new PlayerMovement(this.transform, this._agent, this._inputProvider);
-            
-            _bulletProbabilitiesConfig.Restore(); ;
-            var shootLogic = new PlayerShootingLogic(_weaponHand, Instantiate(_gun), this._inputProvider, _bulletProbabilitiesConfig);
+            if (_damageableLogic == null)
+            {
+                _damageableLogic = this.gameObject.AddComponent(typeof(StandartDamageRecevier)) as StandartDamageRecevier;
+                _damageableLogic.InitHealth(healthOperator);
+            }
+
+            _movementLogic = new PlayerMovement(this.transform, this._agent, this._inputProvider);
+
+            _resourceObtainLogic = new PlayerResourceObtainer(healthOperator, energyUseOperator);
+            _spellCastLogic = new PlayerCaster(energyUseOperator, _inputProvider);
+
+            healthOperator.UpdateHealth();
+            energyUseOperator.UpdateEnergy();
+        }
+
+        public void InitShottingLogic(IWeaponable startingGun, IBulletSettingable bulletSettings)
+        {
+            bulletSettings.Restore();
+            _shootLogic = new PlayerShooter(_weaponHand, startingGun, this._inputProvider, bulletSettings);
         }
     }
 }

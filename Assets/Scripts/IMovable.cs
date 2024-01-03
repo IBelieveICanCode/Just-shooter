@@ -7,6 +7,5 @@ namespace TestShooter
     public interface IMovable
     {
         void Move(Vector3 direction);
-
     }
 }

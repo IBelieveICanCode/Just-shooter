@@ -12,8 +12,8 @@ namespace TestShooter.Enemy
 
         protected override void InitStateMachine()
         {
-            _stateMachine = new StateMachine<ShootingEnemy>(this);
-            _stateMachine.ChangeState(new FindAndShootThePlayerState());
+            //_stateMachine = new StateMachine<ShootingEnemy>(this);
+            //_stateMachine.ChangeState(new FindAndShootThePlayerState());
         }
 
         protected override void UpdateStateMachine()

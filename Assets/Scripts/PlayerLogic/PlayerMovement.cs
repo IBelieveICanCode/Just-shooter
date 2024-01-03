@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TestShooter.GameCamera;
 using TestShooter.InputSystem;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,23 +21,12 @@ namespace TestShooter.Player
 
             _inputProvider.OnMovementDone += Move;
             _inputProvider.OnRotationDone += Rotate;
-
         }
 
         public void Move(Vector3 movementAxis)
         {
-            //Vector3 xzVector = new Vector3(movementAxis.x, 0, movementAxis.y);
-            //Vector3 targetVector = (Quaternion.Euler(0, CameraProvider.GetMainCamera().transform.eulerAngles.y, 0) * xzVector).normalized;
-            //var targetPosition = _ownerTransform.position + targetVector * Time.deltaTime;
-            //_ownerTransform.position = targetPosition;
-
-            //Vector3 xzVector = new Vector3(movementAxis.x, 0, movementAxis.y);
-            //Vector3 worldDirection = Quaternion.Euler(0, CameraProvider.GetMainCamera().transform.eulerAngles.y, 0) * xzVector;
-            //Vector3 targetPosition = _ownerTransform.position + worldDirection;
-            //_agent.SetDestination(targetPosition);
-
             Vector3 xzVector = new Vector3(movementAxis.x, 0, movementAxis.y);
-            Vector3 worldDirection = Quaternion.Euler(0, CameraProvider.GetMainCamera().transform.eulerAngles.y, 0) * xzVector;
+            Vector3 worldDirection = Quaternion.Euler(0, CameraMainProvider.GetMainCamera().transform.eulerAngles.y, 0) * xzVector;
 
             _agent.Move(worldDirection * Time.deltaTime * _agent.speed);
             _agent.SetDestination(_ownerTransform.position + worldDirection);
@@ -47,7 +37,7 @@ namespace TestShooter.Player
             Plane plane = new Plane(Vector3.up, _ownerTransform.position);
             float distance;
 
-            Ray ray = CameraProvider.GetMainCamera().ScreenPointToRay(input);
+            Ray ray = CameraMainProvider.GetMainCamera().ScreenPointToRay(input);
 
             if (plane.Raycast(ray, out distance))
             {
