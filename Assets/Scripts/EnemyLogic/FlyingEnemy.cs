@@ -7,26 +7,21 @@ namespace TestShooter.Enemy
 {
     public class FlyingEnemy : EnemyAbstract, ITouchable
     {
-        [SerializeField] private float _touchDamage = 15f;
-        [SerializeField] private float _maxHeightOfFlying = 1f;
-        [SerializeField] private float _timeOfFlyingUp = 2f;
-        [SerializeField] private float _durationBeforeAttack = 0.5f;
-        [SerializeField] private float _lengthOfDiveAttack = 1f;
-        [SerializeField] private float _diveDuration = 1f;
-
-        public float MaxHeightOfFlying => _maxHeightOfFlying;
-        public float TimeOfFlyingUp => _timeOfFlyingUp;
-        public float DurationBeforeAttack => _durationBeforeAttack;
-        public float LengthOfDiveAttack => _lengthOfDiveAttack;
-        public float DiveDuration => _diveDuration;
-
+        [SerializeField] private FlyingEnemyConfig _flyingSettingConfig;
         private StateMachine<FlyingEnemy> _stateMachine;
+
+        public float MaxHeightOfFlying => _flyingSettingConfig.MaxHeightOfFlying;
+        public float TimeOfFlyingUp => _flyingSettingConfig.TimeOfFlyingUp;
+        public float DurationBeforeAttack => _flyingSettingConfig.DurationBeforeAttack;
+        public float LengthOfDiveAttack => _flyingSettingConfig.LengthOfDiveAttack;
+        public float DiveDuration => _flyingSettingConfig.DiveDuration;
+
         public StateMachine<FlyingEnemy> StateMachine => _stateMachine;
 
         protected override void InitStateMachine()
         {
-            //_stateMachine = new StateMachine<FlyingEnemy>(this);
-            //_stateMachine.ChangeState(new AscendInAirState());
+            _stateMachine = new StateMachine<FlyingEnemy>(this);
+            _stateMachine.ChangeState(new AscendInAirState());
         }
 
         protected override void UpdateStateMachine()
@@ -36,6 +31,11 @@ namespace TestShooter.Enemy
 
         public void OnTriggerEnter(Collider collision)
         {
+            if (collision.gameObject.layer != LayerMask.NameToLayer(Utilities.Playerlayer))
+            {
+                return;
+            }
+
             IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
 
             if (damageable == null)
@@ -43,7 +43,7 @@ namespace TestShooter.Enemy
                 return;
             }
 
-            damageable.ReceiveDamage(_touchDamage);
+            damageable.ReceiveDamage(_flyingSettingConfig.TouchDamage);
             EnemyDamageableLogic.Die();
         }
     }

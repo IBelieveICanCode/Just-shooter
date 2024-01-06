@@ -1,4 +1,5 @@
 using Cinemachine;
+using Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,8 +15,9 @@ namespace TestShooter.Player
     [RequireComponent(typeof(IInputable), typeof(NavMeshAgent))]
     public class PlayerAdmin : MonoBehaviour, IPlayerDetectable
     {
-        private IDamageable _damageableLogic;
+        private IDamageable _healthDamageableLogic;
         private IMovable _movementLogic;
+        private IRotatable _rotationLogic;
         private ICanUseWeaponable _shootLogic;
         private ISpellCasterable _spellCastLogic;
         private IResourceObtainable _resourceObtainLogic;
@@ -35,13 +37,15 @@ namespace TestShooter.Player
 
         public void Init(IHealthOperatorable healthOperator, IEnergyOperatorable energyUseOperator)
         {
-            if (_damageableLogic == null)
+            if (_healthDamageableLogic == null)
             {
-                _damageableLogic = this.gameObject.AddComponent(typeof(StandartDamageRecevier)) as StandartDamageRecevier;
-                _damageableLogic.InitHealth(healthOperator);
+                _healthDamageableLogic = this.gameObject.AddComponent(typeof(StandartDamageRecevier)) as StandartDamageRecevier;
+                _healthDamageableLogic.InitHealth(healthOperator);
+                _healthDamageableLogic.OnDeath += OnMyDeath;
             }
 
             _movementLogic = new PlayerMovement(this.transform, this._agent, this._inputProvider);
+            _rotationLogic = new RotationPlatformMediator().GetRotationLogic(this.transform, this._inputProvider);
 
             _resourceObtainLogic = new PlayerResourceObtainer(healthOperator, energyUseOperator);
             _spellCastLogic = new PlayerCaster(energyUseOperator, _inputProvider);
@@ -50,10 +54,16 @@ namespace TestShooter.Player
             energyUseOperator.UpdateEnergy();
         }
 
-        public void InitShottingLogic(IWeaponable startingGun, IBulletSettingable bulletSettings)
+        public void InitShottingLogic(IWeaponable startingGun, IBulletBehaviourDatable bulletSettings)
         {
             bulletSettings.Restore();
             _shootLogic = new PlayerShooter(_weaponHand, startingGun, this._inputProvider, bulletSettings);
+        }
+
+        private void OnMyDeath()
+        {
+            _healthDamageableLogic.OnDeath -= OnMyDeath;
+            EventManager.GetEvent<PlayerDeadEvent>().TriggerEvent();
         }
     }
 }

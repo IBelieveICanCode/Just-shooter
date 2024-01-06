@@ -4,11 +4,15 @@ using UnityEngine;
 
 namespace TestShooter.Shooting.Bullets
 {
-    public class EnemyDefaultBulletSetting : IBulletSettingable
+    public class EnemyDefaultBulletSetting : IBulletBehaviourDatable
     {
         public BulletTypes GetBullet()
         {
-            return BulletTypes.Default;
+            return BulletTypes.AntiEnergy;
+        }
+
+        public void GuaranteåBullet(BulletTypes Type)
+        {
         }
 
         public void Restore()

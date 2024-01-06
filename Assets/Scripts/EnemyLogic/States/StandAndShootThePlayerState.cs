@@ -6,22 +6,22 @@ using UnityEngine;
 
 namespace TestShooter.Enemy
 {
-    public class StandAndShootThePlayerState : State<ShootingEnemy>
+    public class StandAndShootThePlayerState : State<ShooterEnemy>
     {
         private IWeaponable _currentWeapon;
         private IRotatable _rotation;
 
-        public override void EnterState(ShootingEnemy owner)
+        public override void EnterState(ShooterEnemy owner)
         {
             _currentWeapon = owner.Gun;
             _rotation = new EnemyBasicRotation(owner.Transform);
         }
 
-        public override void ExitState(ShootingEnemy owner)
+        public override void ExitState(ShooterEnemy owner)
         {
         }
 
-        public override void UpdateState(ShootingEnemy owner)
+        public override void UpdateState(ShooterEnemy owner)
         {
             if (owner.PlayerTransform == null)
             {

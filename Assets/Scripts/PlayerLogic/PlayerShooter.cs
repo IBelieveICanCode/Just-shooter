@@ -14,7 +14,7 @@ namespace TestShooter.Player
         private IInputable _inputProvider;
         private IWeaponable _currentWeapon;
 
-        public PlayerShooter(Transform weaponHand, IWeaponable gun, IInputable inputProvider, IBulletSettingable bulletSetting)
+        public PlayerShooter(Transform weaponHand, IWeaponable gun, IInputable inputProvider, IBulletBehaviourDatable bulletSetting)
         {
             _weaponHand = weaponHand;
             _currentWeapon = gun;

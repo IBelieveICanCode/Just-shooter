@@ -10,38 +10,41 @@ namespace TestShooter.Shooting
 {
     public class DefaultGun : MonoBehaviour, IWeaponable
     {
-        [SerializeField] private float _cooldown = 3;
-        [SerializeField] private float _damage = 2;
-        [SerializeField] private float _bulletSpeed = 2;
-        [SerializeField] private Bullet _bulletPrefab;
-
-        private Timer _timerForReloading;
-        private int _pooledBullets = 10;
+        [SerializeField] private GunSettingsConfig _gunSettings;
+        private Timer _timerForReloading = new Timer();
         private Pool<Bullet> _bulletPool;
         private BulletBehaviourFactory _bulletBehaviourFactory;
+        
+        private const int PooledBullets = 10;
 
-        private void Start()
+        public void InitWeapon(Transform holster, IBulletBehaviourDatable bulletSetting)
         {
-            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_bulletPrefab.gameObject), _pooledBullets, null);
-            _timerForReloading = new Timer();
-        }
+            if (_gunSettings == null)
+            {
+                Debug.LogError($"Add a settings for gun {this.gameObject.name}");
+                return;
+            }
 
-        public void InitWeapon(Transform holster, IBulletSettingable bulletSetting)
-        {
             transform.position = holster.position;
             transform.parent = holster;
-            
+
+            _bulletPool = new Pool<Bullet>(new PrefabFactory<Bullet>(_gunSettings.BulletPrefab.gameObject), PooledBullets, null);
             _bulletBehaviourFactory = new BulletBehaviourFactory(bulletSetting);
         }
 
         public void Fire()
         {
+            if (_bulletPool == null)
+            {
+                return;
+            }
+
             if (_timerForReloading.IsTimerActive.Value)
             {
                 return;
             }
 
-            _timerForReloading.StartTimer(_cooldown);
+            _timerForReloading.StartTimer(_gunSettings.Cooldown);
 
             Bullet bullet = _bulletPool.Allocate();
             EventHandler handler = null; //TODO Remove anonymous method
@@ -54,11 +57,16 @@ namespace TestShooter.Shooting
 
             bullet.OnDeath += handler;
             bullet.Restore();
-            bullet.Init(_damage, _bulletSpeed, transform.forward);
+            bullet.Init(_gunSettings.Damage, _gunSettings.BulletSpeed, transform.forward);
             bullet.SetBehaviour(_bulletBehaviourFactory.Create());
             bullet.gameObject.transform.position = transform.position;
 
             bullet.Launch();
+        }
+
+        private void OnDestroy()
+        {
+            _timerForReloading.StopTimer();
         }
     }
 }

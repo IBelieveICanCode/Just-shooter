@@ -14,7 +14,6 @@ namespace TestShooter.Enemy
         {
             owner.Agent.updatePosition = false;
             _moveLogic = new EnemyFlyingMovement(owner.Agent, owner.MaxHeightOfFlying);
-            Debug.Log($"Current state is {GetType().Name}");
             _rotateLogic = new EnemyBasicRotation(owner.Agent.transform);
         }
 

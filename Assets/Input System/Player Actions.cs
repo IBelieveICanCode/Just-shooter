@@ -64,7 +64,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MagicUse"",
+                    ""name"": ""EnergyUse"",
                     ""type"": ""Button"",
                     ""id"": ""ab3c08f6-4fcc-4c6e-b381-81dad8c88d7a"",
                     ""expectedControlType"": ""Button"",
@@ -164,7 +164,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""aef333e5-3d70-4692-bd4b-9a2f48fb271b"",
+                    ""id"": ""abc1f888-222b-4a14-8123-88a70bf99d56"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -202,7 +202,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MagicUse"",
+                    ""action"": ""EnergyUse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -213,7 +213,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MagicUse"",
+                    ""action"": ""EnergyUse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -228,7 +228,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_PlayerDefaultInput_Movement = m_PlayerDefaultInput.FindAction("Movement", throwIfNotFound: true);
         m_PlayerDefaultInput_Rotation = m_PlayerDefaultInput.FindAction("Rotation", throwIfNotFound: true);
         m_PlayerDefaultInput_Pause = m_PlayerDefaultInput.FindAction("Pause", throwIfNotFound: true);
-        m_PlayerDefaultInput_MagicUse = m_PlayerDefaultInput.FindAction("MagicUse", throwIfNotFound: true);
+        m_PlayerDefaultInput_EnergyUse = m_PlayerDefaultInput.FindAction("EnergyUse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -294,7 +294,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerDefaultInput_Movement;
     private readonly InputAction m_PlayerDefaultInput_Rotation;
     private readonly InputAction m_PlayerDefaultInput_Pause;
-    private readonly InputAction m_PlayerDefaultInput_MagicUse;
+    private readonly InputAction m_PlayerDefaultInput_EnergyUse;
     public struct PlayerDefaultInputActions
     {
         private @PlayerActions m_Wrapper;
@@ -303,7 +303,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_PlayerDefaultInput_Movement;
         public InputAction @Rotation => m_Wrapper.m_PlayerDefaultInput_Rotation;
         public InputAction @Pause => m_Wrapper.m_PlayerDefaultInput_Pause;
-        public InputAction EnergyUse => m_Wrapper.m_PlayerDefaultInput_MagicUse;
+        public InputAction @EnergyUse => m_Wrapper.m_PlayerDefaultInput_EnergyUse;
         public InputActionMap Get() { return m_Wrapper.m_PlayerDefaultInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -325,9 +325,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
-            EnergyUse.started += instance.OnMagicUse;
-            EnergyUse.performed += instance.OnMagicUse;
-            EnergyUse.canceled += instance.OnMagicUse;
+            @EnergyUse.started += instance.OnEnergyUse;
+            @EnergyUse.performed += instance.OnEnergyUse;
+            @EnergyUse.canceled += instance.OnEnergyUse;
         }
 
         private void UnregisterCallbacks(IPlayerDefaultInputActions instance)
@@ -344,9 +344,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
-            EnergyUse.started -= instance.OnMagicUse;
-            EnergyUse.performed -= instance.OnMagicUse;
-            EnergyUse.canceled -= instance.OnMagicUse;
+            @EnergyUse.started -= instance.OnEnergyUse;
+            @EnergyUse.performed -= instance.OnEnergyUse;
+            @EnergyUse.canceled -= instance.OnEnergyUse;
         }
 
         public void RemoveCallbacks(IPlayerDefaultInputActions instance)
@@ -370,6 +370,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnMagicUse(InputAction.CallbackContext context);
+        void OnEnergyUse(InputAction.CallbackContext context);
     }
 }

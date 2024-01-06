@@ -23,8 +23,6 @@ namespace TestShooter.Enemy
 
         public override void EnterState(T owner)
         {
-            Debug.Log($"Current state is {GetType().Name}");
-
             _timer = new Timer();
             _timer.StartTimer(_stopDuration, () => _stateMachine.ChangeState(_nextState));
         }

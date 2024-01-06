@@ -7,7 +7,7 @@ namespace TestShooter.Shooting
 {
     public interface IWeaponable
     {
-        void InitWeapon(Transform holster, IBulletSettingable bulletSetting);
+        void InitWeapon(Transform holster, IBulletBehaviourDatable bulletSetting);
         void Fire();
     }
 }

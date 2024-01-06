@@ -14,10 +14,13 @@ namespace TestShooter.Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public abstract class EnemyAbstract : MonoBehaviour, IEnemyable, IPoolable
     {
+        [SerializeField] private EnemyLoot enemyLoot;
         [SerializeField] private HealthConfig _healthConfig;
         [SerializeField] private float _stoppingDistance = 0.5f;
         [SerializeField] private Transform _weaponHolster;
         [SerializeField] private DefaultGun _gun;
+
+        private bool _isOnPause = false;
 
         public IDamageable EnemyDamageableLogic { get; private set; }
         public Transform PlayerTransform { get; private set; }
@@ -40,6 +43,7 @@ namespace TestShooter.Enemy
             Agent.stoppingDistance = _stoppingDistance;
 
             EnemyDamageableLogic.OnDeath += OnMyDeath;
+            EventManager.GetEvent<GameIsPausedEvent>().StartListening(OnPause);
         }
 
         private void Start()
@@ -64,6 +68,11 @@ namespace TestShooter.Enemy
 
         private void Update()
         {
+            if (_isOnPause)
+            {
+                return;
+            }
+
             UpdateStateMachine();
         }
 
@@ -82,7 +91,12 @@ namespace TestShooter.Enemy
         {
             EnemyDamageableLogic.OnDeath -= OnMyDeath;
             EventManager.GetEvent<EnemyDeadEvent>().TriggerEvent(this);
-            Debug.Log($"I am dead: {this.name}");
+            enemyLoot.PassResource(enemyLoot.ResourceType, enemyLoot.Amount);
+        }
+
+        private void OnPause(bool pause)
+        {
+            _isOnPause = pause;
         }
     }
 }

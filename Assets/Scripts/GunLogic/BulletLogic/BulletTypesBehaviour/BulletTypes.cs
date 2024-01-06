@@ -9,5 +9,6 @@ namespace TestShooter.Shooting.Bullets
         Default = 0,
         Phasing = 1,
         Ricochet = 2,
+        AntiEnergy = 3,
     }
 }

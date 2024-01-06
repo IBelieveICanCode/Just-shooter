@@ -8,8 +8,9 @@ namespace TestShooter.Shooting.Bullets
     {
         public BulletTypes Type => BulletTypes.Phasing;
 
-        public void ExecuteBehavior(Bullet bullet, Collider collision)
+        public void ExecuteBehavior(Bullet bullet, Collider collision, IDamageable damageable)
         {
+            damageable.ReceiveDamage(bullet.Damage);
         }
     }
 }

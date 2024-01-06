@@ -55,7 +55,7 @@ namespace TestShooter.Player
             }
         }
 
-        public void Cleanup()
+        public void Dispose()
         {
             UnsubscribeFromHealthOperator();
             UnsubscribeFromEnergyOperator();

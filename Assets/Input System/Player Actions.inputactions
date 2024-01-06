@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MagicUse",
+                    "name": "EnergyUse",
                     "type": "Button",
                     "id": "ab3c08f6-4fcc-4c6e-b381-81dad8c88d7a",
                     "expectedControlType": "Button",
@@ -142,7 +142,7 @@
                 },
                 {
                     "name": "",
-                    "id": "aef333e5-3d70-4692-bd4b-9a2f48fb271b",
+                    "id": "abc1f888-222b-4a14-8123-88a70bf99d56",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
@@ -180,7 +180,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MagicUse",
+                    "action": "EnergyUse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -191,7 +191,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MagicUse",
+                    "action": "EnergyUse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

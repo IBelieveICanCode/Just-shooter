@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3dac723a47e40c44af37c8ad505c27e, type: 3}
+  m_Name: Player Config
+  m_EditorClassIdentifier: 
+  <PlayerPrefab>k__BackingField: {fileID: 5124244990334003913, guid: d47585f430f494643b37c5657fc0ab6b, type: 3}
+  <PlayerHealthConfig>k__BackingField: {fileID: 11400000, guid: ea4853dca6562444d83878e1ab754e03, type: 2}
+  <PlayerEnergyConfig>k__BackingField: {fileID: 11400000, guid: 209ec91c419ce254c84117ccc89d7927, type: 2}
+  <PlayerGunPrefab>k__BackingField: {fileID: 4857497526889395487, guid: 95201e54d1124b1418daa853f7a72dbc, type: 3}
+  <BulletsSettingsConfig>k__BackingField: {fileID: 11400000, guid: 38288f8323eb3bb4eb2dcf0e92a92b38, type: 2}

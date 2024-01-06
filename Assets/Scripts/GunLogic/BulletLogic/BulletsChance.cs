@@ -10,7 +10,7 @@ namespace TestShooter.Shooting.Bullets
         [SerializeField] private BulletTypes _type;
         [Range(0, 100)]
         [SerializeField] private float _defaultProbability;
-        private float _currentProbability; //TODO custom editor to assign this to default automatically
+        private float _currentProbability; //TODO custom editor to forbid user from setting more than 100 total 
         public float Probability => _currentProbability;
         public BulletTypes Type => _type;
 

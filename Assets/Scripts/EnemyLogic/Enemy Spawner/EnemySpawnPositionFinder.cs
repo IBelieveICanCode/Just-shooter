@@ -7,7 +7,7 @@ namespace TestShooter.Enemy
 {
     public class EnemySpawnPositionFinder
     {
-        private float range = 10.0f; // TODO Calcualte range depending on the size of nav mesh surface
+        private float range = 5f; // TODO Calcualte range depending on the size of nav mesh surface
 
         public Vector3 CalculateSpawnPoint(Transform transform)
         {

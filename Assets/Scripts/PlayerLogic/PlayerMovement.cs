@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 namespace TestShooter.Player
 {
-    public class PlayerMovement : IMovable, IRotatable
+    public class PlayerMovement : IMovable //IRotatable
     {
         private Transform _ownerTransform;
         private IInputable _inputProvider;
@@ -20,7 +20,6 @@ namespace TestShooter.Player
             _agent = agent;
 
             _inputProvider.OnMovementDone += Move;
-            _inputProvider.OnRotationDone += Rotate;
         }
 
         public void Move(Vector3 movementAxis)
@@ -30,20 +29,6 @@ namespace TestShooter.Player
 
             _agent.Move(worldDirection * Time.deltaTime * _agent.speed);
             _agent.SetDestination(_ownerTransform.position + worldDirection);
-        }
-
-        public void Rotate(Vector3 input)
-        {
-            Plane plane = new Plane(Vector3.up, _ownerTransform.position);
-            float distance;
-
-            Ray ray = CameraMainProvider.GetMainCamera().ScreenPointToRay(input);
-
-            if (plane.Raycast(ray, out distance))
-            {
-                Vector3 position = ray.GetPoint(distance);
-                _ownerTransform.LookAt(position);
-            }
-        }
+        }      
     }
 }

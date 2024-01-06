@@ -8,7 +8,7 @@ namespace TestShooter.Shooting.Bullets
     public class RicoshetBehaviour : IBulletBehavior
     {
         private List<IEnemyable> _alreadyHitEnemies = new List<IEnemyable>();
-        private float _radius = 20;
+        private float _radius = 10;
         private int _amountOfRicochets;
         private int _maxAmountOfRicochets = 1;
 
@@ -19,8 +19,10 @@ namespace TestShooter.Shooting.Bullets
             _amountOfRicochets = _maxAmountOfRicochets;
         }
 
-        public void ExecuteBehavior(Bullet bullet, Collider collider)
+        public void ExecuteBehavior(Bullet bullet, Collider collider, IDamageable damageable)
         {
+            damageable.ReceiveDamage(bullet.Damage);
+
             IEnemyable enemy = collider.gameObject.GetComponent<IEnemyable>();
 
             if (_amountOfRicochets <= 0)
@@ -31,7 +33,7 @@ namespace TestShooter.Shooting.Bullets
             }
 
             _alreadyHitEnemies.Add(enemy);
-            GameObject enemyToRicochet = FindNearestEnemy(bullet.transform, _radius);
+            IEnemyable enemyToRicochet = FindNearestEnemy(bullet.transform, _radius);
 
             if (enemyToRicochet == null)
             {
@@ -42,31 +44,29 @@ namespace TestShooter.Shooting.Bullets
             CheckEnemyDieFromBullet(enemy.EnemyDamageableLogic, bullet.Damage);
 
             _amountOfRicochets--;
-            Vector3 direction = enemyToRicochet.transform.position - bullet.transform.position;
+            Vector3 direction = enemyToRicochet.Transform.position - bullet.transform.position;
             bullet.Init(bullet.Damage, bullet.Speed, direction);
         }
 
-        private GameObject FindNearestEnemy(Transform thisBullet, float radius)
+        private IEnemyable FindNearestEnemy(Transform thisBullet, float radius)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(thisBullet.transform.position, radius);
-            GameObject nearestEnemy = null;
+            IEnemyable[] hitColliders = Utilities.GetEnemiesInRadius(thisBullet.transform.position, radius);
+            IEnemyable nearestEnemy = null;
             float closestDistance = float.MaxValue;
 
-            foreach (Collider hitCollider in hitColliders)
+            foreach (IEnemyable enemy in hitColliders)
             {
-                IEnemyable foundEnemyComponent = hitCollider.gameObject.GetComponent<IEnemyable>();
-
-                if (!IsEnemyValid(foundEnemyComponent))
+                if (!IsEnemyValid(enemy))
                 {
                     continue;
                 }
 
-                float distance = Vector3.Distance(thisBullet.transform.position, hitCollider.transform.position);
+                float distance = Vector3.Distance(thisBullet.transform.position, enemy.Transform.position);
 
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
-                    nearestEnemy = hitCollider.gameObject;
+                    nearestEnemy = enemy;
                 }
             }
 

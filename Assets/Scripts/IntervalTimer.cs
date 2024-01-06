@@ -5,47 +5,50 @@ using UnityEngine;
 
 namespace TestShooter.Timers
 {
-    public class IntervalTimer : MonoBehaviour
+    public class IntervalTimer
     {
-        private Timer spawnTimer;
-        private float _startingSpawnDuration;
-        private float _spawnDurationDecrease;
-        private float _minSpawnDuration;
+        private Timer _intervalTimer;
+        private float _startingDuration;
+        private float _durationDecrease;
+        private float _minTriggerDuration;
 
         private Action _onTimerFire;
 
-        public IntervalTimer(float startingSpawnDuration, Action onTimerFire, float spawnDurationDecrease = 1, float minSpawnDuration = 1)
+        public IntervalTimer(float startingDuration, Action onTimerFire, float durationDecrease = 1, float minDuration = 1)
         {
-            spawnTimer = new Timer();
-            _startingSpawnDuration = startingSpawnDuration;
-            _spawnDurationDecrease = spawnDurationDecrease;
-            _minSpawnDuration = minSpawnDuration;
+            _intervalTimer = new Timer();
+            _startingDuration = startingDuration;
+            _durationDecrease = durationDecrease;
+            _minTriggerDuration = minDuration;
             _onTimerFire = onTimerFire;
-            StartSpawnTimer(_startingSpawnDuration);
+            StartTimer(_startingDuration);
         }
 
-        private void StartSpawnTimer(float duration)
+        private void StartTimer(float duration)
         {
-            Debug.Log("Start timer for enemies");
-            spawnTimer.StartTimer(duration, OnTimerCompleted);
+            _intervalTimer.StartTimer(duration, OnTimerCompleted);
         }
 
         private void OnTimerCompleted()
         {
-            Debug.Log($"Completed timer with {_startingSpawnDuration} interval");
             _onTimerFire?.Invoke();
             UpdateTimerDuration();
-            StartSpawnTimer(_startingSpawnDuration);
+            StartTimer(_startingDuration);
         }
 
         private void UpdateTimerDuration()
         {
-            _startingSpawnDuration = Mathf.Max(_minSpawnDuration, _startingSpawnDuration - _spawnDurationDecrease);
+            _startingDuration = Mathf.Max(_minTriggerDuration, _startingDuration - _durationDecrease);
         }
 
-        private void StopSpawning()
+        public void Pause()
         {
-            spawnTimer.StopTimer();
+            _intervalTimer.PauseTimer();
+        }
+
+        public void Resume()
+        {
+            _intervalTimer.ResumeTimer();
         }
     }
 }

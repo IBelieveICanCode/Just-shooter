@@ -7,13 +7,13 @@ using UnityEngine.AI;
 
 namespace TestShooter.Enemy
 {
-    public class FindAndShootThePlayerState : State<ShootingEnemy>
+    public class FindAndShootThePlayerState : State<ShooterEnemy>
     {
         private IMovable _moveLogic;
         private IRotatable _rotateLogic;
         private IWeaponable _currentWeapon;
 
-        public override void EnterState(ShootingEnemy owner)
+        public override void EnterState(ShooterEnemy owner)
         {
             owner.Agent.isStopped = false;
             _moveLogic = new EnemyGroundMovement(owner.Agent);
@@ -21,12 +21,12 @@ namespace TestShooter.Enemy
             _currentWeapon = owner.Gun;
         }
 
-        public override void ExitState(ShootingEnemy owner)
+        public override void ExitState(ShooterEnemy owner)
         {
             owner.Agent.isStopped = true;
         }
 
-        public override void UpdateState(ShootingEnemy owner)
+        public override void UpdateState(ShooterEnemy owner)
         {
             if (owner.PlayerTransform == null)
             {

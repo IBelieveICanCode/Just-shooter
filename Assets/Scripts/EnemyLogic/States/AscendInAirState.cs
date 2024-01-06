@@ -11,7 +11,6 @@ namespace TestShooter.Enemy
         public override void EnterState(FlyingEnemy owner)
         {
             owner.Agent.updatePosition = false;
-            Debug.Log($"Current state is {GetType().Name}");
             owner.Transform
                 .DOMoveY(owner.MaxHeightOfFlying, owner.TimeOfFlyingUp)
                 .OnComplete(() => owner.StateMachine.ChangeState(new FlyingToThePlayerState()));

@@ -5,6 +5,10 @@ namespace TestShooter.Timers
 {
     public class Timer
     {
+        private float _remainingDuration = 0f;
+        private DateTime _pauseTime;
+        private Action _onCompleteAction;
+
         private IDisposable _timerSubscription;
         private readonly ReactiveProperty<bool> _isTimerActive = new ReactiveProperty<bool>(false);
         public IReadOnlyReactiveProperty<bool> IsTimerActive => _isTimerActive;
@@ -13,23 +17,18 @@ namespace TestShooter.Timers
 
         public void StartTimer(float duration)
         {
-            IsCompleted = false;
-
-            if (_isTimerActive.Value)
-            {
-                return;
-            }
-
-            _isTimerActive.Value = true;
-            _timerSubscription = Observable.Timer(TimeSpan.FromSeconds(duration))
-                      .Subscribe(_ =>
-                      {
-                          _isTimerActive.Value = false;
-                          IsCompleted = true;
-                      });
+            _remainingDuration = duration;
+            StartOrResumeTimer();
         }
 
         public void StartTimer(float duration, Action onCompleteAction)
+        {
+            _remainingDuration = duration;
+            _onCompleteAction = onCompleteAction;
+            StartOrResumeTimer();
+        }
+
+        private void StartOrResumeTimer()
         {
             IsCompleted = false;
 
@@ -39,12 +38,12 @@ namespace TestShooter.Timers
             }
 
             _isTimerActive.Value = true;
-            _timerSubscription = Observable.Timer(TimeSpan.FromSeconds(duration))
+            _timerSubscription = Observable.Timer(TimeSpan.FromSeconds(_remainingDuration))
                       .Subscribe(_ =>
                       {
                           _isTimerActive.Value = false;
                           IsCompleted = true;
-                          onCompleteAction?.Invoke(); // Invoke the passed method
+                          _onCompleteAction?.Invoke();
                       });
         }
 
@@ -52,9 +51,29 @@ namespace TestShooter.Timers
         {
             if (_isTimerActive.Value && _timerSubscription != null)
             {
-                _timerSubscription.Dispose(); // Dispose of the subscription
+                _timerSubscription.Dispose();
                 _isTimerActive.Value = false;
                 IsCompleted = true;
+            }
+        }
+
+        public void PauseTimer()
+        {
+            if (_isTimerActive.Value && _timerSubscription != null)
+            {
+                _pauseTime = DateTime.Now;
+                _timerSubscription.Dispose();
+                _isTimerActive.Value = false;
+            }
+        }
+
+        public void ResumeTimer()
+        {
+            if (!IsCompleted && !_isTimerActive.Value)
+            {
+                var timePaused = DateTime.Now - _pauseTime;
+                _remainingDuration -= (float)timePaused.TotalSeconds;
+                StartOrResumeTimer();
             }
         }
     }

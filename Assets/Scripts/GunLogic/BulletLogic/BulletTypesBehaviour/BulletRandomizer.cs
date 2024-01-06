@@ -29,7 +29,6 @@ namespace TestShooter.Shooting.Bullets
             {
                 if (randomPoint < bulletChance.Probability)
                 {
-                    UnityEngine.Debug.Log($"Randomizer returned type of bullet: {bulletChance.Type} based on probability {bulletChance.Probability}");
                     return bulletChance.Type;
                 }
 

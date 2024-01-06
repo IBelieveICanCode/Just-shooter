@@ -27,6 +27,8 @@ namespace TestShooter.Player
             _inputActions.PlayerDefaultInput.Shoot.performed += Shoot;
             _inputActions.PlayerDefaultInput.Pause.performed += TogglePause;
             _inputActions.PlayerDefaultInput.EnergyUse.performed += UseEnergy;
+
+            EventManager.GetEvent<GameIsPausedEvent>().StartListening(SetGameplayActionsEnabled);
         }
 
         private void Update()
@@ -58,7 +60,6 @@ namespace TestShooter.Player
         {
             _isPaused = !_isPaused;
             EventManager.GetEvent<GameIsPausedEvent>().TriggerEvent(_isPaused);
-            SetGameplayActionsEnabled(!_isPaused);
         }
 
         private void UseEnergy(InputAction.CallbackContext context)
@@ -66,21 +67,21 @@ namespace TestShooter.Player
             OnEnergyUseDone?.Invoke();
         }
 
-        private void SetGameplayActionsEnabled(bool enabled)
+        private void SetGameplayActionsEnabled(bool paused)
         {
-            if (enabled)
-            {
-                _inputActions.PlayerDefaultInput.Movement.Enable();
-                _inputActions.PlayerDefaultInput.Rotation.Enable();
-                _inputActions.PlayerDefaultInput.Shoot.Enable();
-                _inputActions.PlayerDefaultInput.EnergyUse.Enable();
-            }
-            else
+            if (paused)
             {
                 _inputActions.PlayerDefaultInput.Movement.Disable();
                 _inputActions.PlayerDefaultInput.Rotation.Disable();
                 _inputActions.PlayerDefaultInput.Shoot.Disable();
                 _inputActions.PlayerDefaultInput.EnergyUse.Disable();
+            }
+            else
+            {
+                _inputActions.PlayerDefaultInput.Movement.Enable();
+                _inputActions.PlayerDefaultInput.Rotation.Enable();
+                _inputActions.PlayerDefaultInput.Shoot.Enable();
+                _inputActions.PlayerDefaultInput.EnergyUse.Enable();
             }
         }
     }

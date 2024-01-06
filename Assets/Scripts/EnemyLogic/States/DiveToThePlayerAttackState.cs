@@ -12,7 +12,6 @@ namespace TestShooter.Enemy
         public override void EnterState(FlyingEnemy owner)
         {
             owner.Agent.updatePosition = false;
-            Debug.Log($"Current state is {GetType().Name}");
 
             var nextState = new FlyingToThePlayerState();
             _enemyDiveAttack = new EnemyDiveAttack(

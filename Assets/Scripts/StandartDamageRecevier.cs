@@ -27,6 +27,7 @@ namespace TestShooter.Player
         public void ReceiveDamage(float damage)
         {
             _healthOperator.SubstractHealth(damage);
+            Debug.Log($"Received damage on {gameObject.name} with {damage}");
 
             if (_healthOperator.Health <= 0)
             {

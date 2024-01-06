@@ -7,14 +7,14 @@ namespace TestShooter.Shooting.Bullets
 {
     public class RicoshetDeathEffect : IDeathEffectable
     {
-        private float _energyProbability = 0.7f;
-        private float _energyToPass = 10f;
+        private const float EnergyProbability = 0.7f;
+        private const float EnergyToPass = 10f;
 
-        private float _healthDivider = 2f;
+        private const float HealthDivider = 2f;
 
         public void TriggerDeathEffect()
         {
-            if (Random.value < _energyProbability) //TODO separate and probably complex class
+            if (Random.value < EnergyProbability) //TODO separate and probably complex class
             {
                 GivePlayerEnergy();
             }
@@ -27,7 +27,7 @@ namespace TestShooter.Shooting.Bullets
         private void GivePlayerHealth()
         {
             var playerMaxHealth = TheWorldInfoProvider.Instance.GetPlayerHealthData().MaxHealth;
-            var healthToPass = playerMaxHealth / _healthDivider;
+            var healthToPass = playerMaxHealth / HealthDivider;
             Debug.Log($"Gave health: {healthToPass}");
 
             EventManager.GetEvent<PassResourceToPlayerEvent>().TriggerEvent(ResourceType.Health, healthToPass);
@@ -35,7 +35,8 @@ namespace TestShooter.Shooting.Bullets
 
         private void GivePlayerEnergy()
         {
-            EventManager.GetEvent<PassResourceToPlayerEvent>().TriggerEvent(ResourceType.Energy, _energyToPass);
+            Debug.Log($"Gave energy: {EnergyToPass}");
+            EventManager.GetEvent<PassResourceToPlayerEvent>().TriggerEvent(ResourceType.Energy, EnergyToPass);
         }
     }
 }

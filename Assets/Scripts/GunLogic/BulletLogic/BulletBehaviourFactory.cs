@@ -7,9 +7,9 @@ namespace TestShooter.Shooting.Bullets
 {
     public class BulletBehaviourFactory : IFactory<IBulletBehavior>
     {
-        private IBulletSettingable _bulletProbabilitiesConfig;
+        private IBulletBehaviourDatable _bulletProbabilitiesConfig;
 
-        public BulletBehaviourFactory(IBulletSettingable bulletProbabilitiesConfig)
+        public BulletBehaviourFactory(IBulletBehaviourDatable bulletProbabilitiesConfig)
         {
             _bulletProbabilitiesConfig = bulletProbabilitiesConfig;
         }
@@ -28,13 +28,15 @@ namespace TestShooter.Shooting.Bullets
                 {
                     return new RicoshetBehaviour();
                 }
+                case BulletTypes.AntiEnergy:
+                {
+                    return new AntiEnergyBehaviour(); 
+                }
                 default:
                 {
                     return new DefaultBullet();
                 }
             }
         }
-
-
     }
 }
