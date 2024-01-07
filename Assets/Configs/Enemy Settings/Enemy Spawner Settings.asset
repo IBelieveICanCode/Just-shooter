@@ -15,4 +15,4 @@ MonoBehaviour:
   <StartingSpawnEnemyDuration>k__BackingField: 1
   <SpawnDurationDecrease>k__BackingField: 1
   <MinSpawnDuration>k__BackingField: 1
-  <MaxAmountEnemiesAllowed>k__BackingField: 0
+  <MaxAmountEnemiesAllowed>k__BackingField: 30

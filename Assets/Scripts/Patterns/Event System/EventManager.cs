@@ -14,9 +14,10 @@ namespace Events
         public static void InitEssentials()
         {
             Debug.Log("EventManager is initiated"); //TODO Make a mediator for consolidation of similar events
+            EventsContainer.Add(typeof(StartGameEvent), new StartGameEvent());
             EventsContainer.Add(typeof(AnnouncePlayerPositionEvent), new AnnouncePlayerPositionEvent());
             EventsContainer.Add(typeof(EnemyDeadEvent), new EnemyDeadEvent());
-            EventsContainer.Add(typeof(PlayerDeadEvent), new PlayerDeadEvent());
+            EventsContainer.Add(typeof(GameOverEvent), new GameOverEvent());
             EventsContainer.Add(typeof(GameIsPausedEvent), new GameIsPausedEvent());
             EventsContainer.Add(typeof(PassResourceToPlayerEvent), new PassResourceToPlayerEvent());
             EventsContainer.Add(typeof(KillAllEnemiesEvent), new KillAllEnemiesEvent());

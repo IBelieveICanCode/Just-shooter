@@ -11,7 +11,6 @@ namespace TestShooter.Enemy
 {
     public class EnemySpawnerAdmin : MonoBehaviour
     {
-        [SerializeField] private EnemyWeightConfig _enemyWeights;
         [SerializeField] private EnemySpawnerConfig _enemySpawnerConfig;
 
         [SerializeField] private GameObject _flyingEnemyPrefab;
@@ -39,7 +38,7 @@ namespace TestShooter.Enemy
             SetEnemyPool();
         }
 
-        public void InitializeEnemySpawner()
+        public void InitializeEnemySpawner(EnemyWeightConfig enemyWeight)
         {
             if (_enemySpawnerConfig == null)
             {
@@ -49,7 +48,7 @@ namespace TestShooter.Enemy
 
             OnKillAllEnemies();
             _spawnPositionFinder = new EnemySpawnPositionFinder();
-            _enemyGetter = new EnemyTypeGetter(_enemyWeights);
+            _enemyGetter = new EnemyTypeGetter(enemyWeight);
             _enemySpawnTimer = new IntervalTimer(
                     _enemySpawnerConfig.StartingSpawnEnemyDuration, 
                     SpawnEnemy, 

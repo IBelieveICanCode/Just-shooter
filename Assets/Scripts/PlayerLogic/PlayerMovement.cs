@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 namespace TestShooter.Player
 {
-    public class PlayerMovement : IMovable //IRotatable
+    public class PlayerMovement : IMovable
     {
         private Transform _ownerTransform;
         private IInputable _inputProvider;
@@ -25,7 +25,7 @@ namespace TestShooter.Player
         public void Move(Vector3 movementAxis)
         {
             Vector3 xzVector = new Vector3(movementAxis.x, 0, movementAxis.y);
-            Vector3 worldDirection = Quaternion.Euler(0, CameraMainProvider.GetMainCamera().transform.eulerAngles.y, 0) * xzVector;
+            Vector3 worldDirection = (Quaternion.Euler(0, CameraMainProvider.GetMainCamera().transform.eulerAngles.y, 0) * xzVector).normalized;
 
             _agent.Move(worldDirection * Time.deltaTime * _agent.speed);
             _agent.SetDestination(_ownerTransform.position + worldDirection);

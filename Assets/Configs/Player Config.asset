@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3dac723a47e40c44af37c8ad505c27e, type: 3}
   m_Name: Player Config
   m_EditorClassIdentifier: 
+  <Speed>k__BackingField: 2
   <PlayerPrefab>k__BackingField: {fileID: 5124244990334003913, guid: d47585f430f494643b37c5657fc0ab6b, type: 3}
   <PlayerHealthConfig>k__BackingField: {fileID: 11400000, guid: ea4853dca6562444d83878e1ab754e03, type: 2}
   <PlayerEnergyConfig>k__BackingField: {fileID: 11400000, guid: 209ec91c419ce254c84117ccc89d7927, type: 2}

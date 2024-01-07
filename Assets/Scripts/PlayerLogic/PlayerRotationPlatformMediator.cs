@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TestShooter.Player
 {
-    public class RotationPlatformMediator
+    public class PlayerRotationPlatformMediator
     {
         public IRotatable GetRotationLogic(Transform ownerTransform, IInputable inputProvider)
         {

@@ -1,3 +1,4 @@
+using Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace TestShooter.Enemy
 
                 if (randomValue < cumulativeWeight)
                 {
+                    TotalEnemiesSpawned++;
                     return ConvertToType(enemy.Type);
                 }
             }

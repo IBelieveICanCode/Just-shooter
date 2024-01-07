@@ -1,3 +1,4 @@
+using Events;
 using ObjectPool;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,9 +30,11 @@ namespace TestShooter.Enemy
 
         public void RemoveAllEnemies()
         {
-            foreach (var enemy in _activeEnemies)
+            var enemiesToReset = new List<IPoolable>(_activeEnemies);
+
+            foreach (var enemy in enemiesToReset)
             {
-                enemy.Reset();
+                EventManager.GetEvent<EnemyDeadEvent>().TriggerEvent(enemy);
             }
         }
     }

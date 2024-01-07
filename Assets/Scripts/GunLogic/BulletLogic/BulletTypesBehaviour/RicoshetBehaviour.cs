@@ -82,7 +82,6 @@ namespace TestShooter.Shooting.Bullets
 
             if (_alreadyHitEnemies.Contains(enemy))
             {
-                Debug.Log("The list is already containing this enemy");
                 return false;
             }
 

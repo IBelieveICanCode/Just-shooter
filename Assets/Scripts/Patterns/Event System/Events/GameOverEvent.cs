@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Events
 {
-    public class PlayerDeadEvent : BaseEvents
+    public class GameOverEvent : BaseEvents
     {
     }
 }

@@ -28,14 +28,12 @@ namespace TestShooter.Shooting.Bullets
         {
             var playerMaxHealth = TheWorldInfoProvider.Instance.GetPlayerHealthData().MaxHealth;
             var healthToPass = playerMaxHealth / HealthDivider;
-            Debug.Log($"Gave health: {healthToPass}");
 
             EventManager.GetEvent<PassResourceToPlayerEvent>().TriggerEvent(ResourceType.Health, healthToPass);
         }
 
         private void GivePlayerEnergy()
         {
-            Debug.Log($"Gave energy: {EnergyToPass}");
             EventManager.GetEvent<PassResourceToPlayerEvent>().TriggerEvent(ResourceType.Energy, EnergyToPass);
         }
     }

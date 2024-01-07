@@ -9,6 +9,7 @@ using TestShooter.Shooting.Bullets;
 using TestShooter.Spells;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 namespace TestShooter.Player
 {
@@ -16,11 +17,6 @@ namespace TestShooter.Player
     public class PlayerAdmin : MonoBehaviour, IPlayerDetectable
     {
         private IDamageable _healthDamageableLogic;
-        private IMovable _movementLogic;
-        private IRotatable _rotationLogic;
-        private ICanUseWeaponable _shootLogic;
-        private ISpellCasterable _spellCastLogic;
-        private IResourceObtainable _resourceObtainLogic;
 
         private IInputable _inputProvider;
         private NavMeshAgent _agent;
@@ -44,11 +40,11 @@ namespace TestShooter.Player
                 _healthDamageableLogic.OnDeath += OnMyDeath;
             }
 
-            _movementLogic = new PlayerMovement(this.transform, this._agent, this._inputProvider);
-            _rotationLogic = new RotationPlatformMediator().GetRotationLogic(this.transform, this._inputProvider);
+            new PlayerMovement(this.transform, this._agent, this._inputProvider);
+            new PlayerRotationPlatformMediator().GetRotationLogic(this.transform, this._inputProvider);
 
-            _resourceObtainLogic = new PlayerResourceObtainer(healthOperator, energyUseOperator);
-            _spellCastLogic = new PlayerCaster(energyUseOperator, _inputProvider);
+            new PlayerResourceObtainer(healthOperator, energyUseOperator);
+            new PlayerCaster(energyUseOperator, _inputProvider);
 
             healthOperator.UpdateHealth();
             energyUseOperator.UpdateEnergy();
@@ -57,13 +53,18 @@ namespace TestShooter.Player
         public void InitShottingLogic(IWeaponable startingGun, IBulletBehaviourDatable bulletSettings)
         {
             bulletSettings.Restore();
-            _shootLogic = new PlayerShooter(_weaponHand, startingGun, this._inputProvider, bulletSettings);
+            new PlayerShooter(_weaponHand, startingGun, this._inputProvider, bulletSettings);
+        }
+
+        public void InitStats(float speed)
+        {
+            _agent.speed = speed;
         }
 
         private void OnMyDeath()
         {
             _healthDamageableLogic.OnDeath -= OnMyDeath;
-            EventManager.GetEvent<PlayerDeadEvent>().TriggerEvent();
+            EventManager.GetEvent<GameOverEvent>().TriggerEvent();
         }
     }
 }

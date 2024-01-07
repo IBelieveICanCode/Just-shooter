@@ -5,54 +5,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuUI : MonoBehaviour
+namespace TestShooter.UI
 {
-    [SerializeField] private float _durationOfShowHide = 1f;
-    [SerializeField] private CanvasGroup _mainMenuCanvasGroup;
-
-    [SerializeField] private Button _resumeButton;
-    [SerializeField] private Button _quitButton;
-
-    private void Start()
+    public class MainMenuUI : MonoBehaviour
     {
-        Hide(0);
+        [SerializeField] private float _durationOfShowHide = 1f;
+        [SerializeField] private CanvasGroup _mainMenuCanvasGroup;
 
-        EventManager.GetEvent<GameIsPausedEvent>().StartListening(OnPause);
+        [SerializeField] private Button _startOverButton;
+        [SerializeField] private Button _resumeButton;
+        [SerializeField] private Button _quitButton;
 
-        _resumeButton.onClick.AddListener(OnResumeButtonClicked);
-        _quitButton.onClick.AddListener(OnQuitButtonClicked);
-    }
-
-    private void OnPause(bool pause)
-    {
-        if (pause)
+        private void Start()
         {
-            Show(_durationOfShowHide);
-            return;
+            Hide(0);
+
+            EventManager.GetEvent<GameIsPausedEvent>().StartListening(OnPause);
+            EventManager.GetEvent<GameOverEvent>().StartListening(OnPlayerDead);
+
+            _startOverButton.onClick.AddListener(OnStartOverButtonClicked);
+            _resumeButton.onClick.AddListener(OnResumeButtonClicked);
+            _quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
-        Hide(_durationOfShowHide);
-    }
+        private void OnPause(bool pause)
+        {
+            if (pause)
+            {
+                Show(_durationOfShowHide);
+                return;
+            }
 
-    private void OnResumeButtonClicked()
-    {
-        EventManager.GetEvent<GameIsPausedEvent>().TriggerEvent(false);
-    }
+            Hide(_durationOfShowHide);
+        }
 
-    private void OnQuitButtonClicked()
-    {
-        Application.Quit();
-    }
+        private void OnPlayerDead()
+        {
+            _resumeButton.interactable = false;
+            EventManager.GetEvent<GameIsPausedEvent>().TriggerEvent(true);
+        }
 
-    private void Show(float duration)
-    {
-        _mainMenuCanvasGroup.DOFade(1, duration);
-        _mainMenuCanvasGroup.transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBack);
-    }
+        private void OnStartOverButtonClicked()
+        {
+            _resumeButton.interactable = true;
+            EventManager.GetEvent<StartGameEvent>().TriggerEvent();
+        }
 
-    private void Hide(float duration)
-    {
-        _mainMenuCanvasGroup.DOFade(0, duration);
-        _mainMenuCanvasGroup.transform.DOScale(Vector3.zero, duration).SetEase(Ease.OutBack);
+        private void OnResumeButtonClicked()
+        {
+            EventManager.GetEvent<GameIsPausedEvent>().TriggerEvent(false);
+        }
+
+        private void OnQuitButtonClicked()
+        {
+            Application.Quit();
+        }
+
+        private void Show(float duration)
+        {
+            _mainMenuCanvasGroup.DOFade(1, duration);
+            _mainMenuCanvasGroup.transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBack);
+        }
+
+        private void Hide(float duration)
+        {
+            _mainMenuCanvasGroup.DOFade(0, duration);
+            _mainMenuCanvasGroup.transform.DOScale(Vector3.zero, duration).SetEase(Ease.OutBack);
+        }
     }
 }

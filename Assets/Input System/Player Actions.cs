@@ -64,7 +64,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""EnergyUse"",
+                    ""name"": ""Energy Use"",
                     ""type"": ""Button"",
                     ""id"": ""ab3c08f6-4fcc-4c6e-b381-81dad8c88d7a"",
                     ""expectedControlType"": ""Button"",
@@ -80,7 +80,18 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d9605c5-0876-4e30-bd77-6abfdcf69947"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -91,7 +102,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Joystick"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -113,7 +124,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -124,7 +135,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -135,7 +146,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -146,7 +157,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -157,7 +168,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Joystick"",
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -168,7 +179,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -179,7 +190,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -190,7 +201,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Joystick"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -201,8 +212,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EnergyUse"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Energy Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -212,15 +223,26 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EnergyUse"",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Energy Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
+            ""devices"": []
+        },
+        {
+            ""name"": ""Joystick"",
+            ""bindingGroup"": ""Joystick"",
+            ""devices"": []
+        }
+    ]
 }");
         // PlayerDefaultInput
         m_PlayerDefaultInput = asset.FindActionMap("PlayerDefaultInput", throwIfNotFound: true);
@@ -228,7 +250,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_PlayerDefaultInput_Movement = m_PlayerDefaultInput.FindAction("Movement", throwIfNotFound: true);
         m_PlayerDefaultInput_Rotation = m_PlayerDefaultInput.FindAction("Rotation", throwIfNotFound: true);
         m_PlayerDefaultInput_Pause = m_PlayerDefaultInput.FindAction("Pause", throwIfNotFound: true);
-        m_PlayerDefaultInput_EnergyUse = m_PlayerDefaultInput.FindAction("EnergyUse", throwIfNotFound: true);
+        m_PlayerDefaultInput_EnergyUse = m_PlayerDefaultInput.FindAction("Energy Use", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -364,6 +386,24 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerDefaultInputActions @PlayerDefaultInput => new PlayerDefaultInputActions(this);
+    private int m_KeyboardSchemeIndex = -1;
+    public InputControlScheme KeyboardScheme
+    {
+        get
+        {
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
+        }
+    }
+    private int m_JoystickSchemeIndex = -1;
+    public InputControlScheme JoystickScheme
+    {
+        get
+        {
+            if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
+            return asset.controlSchemes[m_JoystickSchemeIndex];
+        }
+    }
     public interface IPlayerDefaultInputActions
     {
         void OnShoot(InputAction.CallbackContext context);
