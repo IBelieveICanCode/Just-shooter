@@ -1,4 +1,4 @@
-Welcome to TestShooter project
+Welcome to Just Shooter. I test some things here
 
 External frameworks and libraries in no particular order:
 
